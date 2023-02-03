@@ -69,7 +69,7 @@ void pubLatestOdometry(const Eigen::Vector3d &P, const Eigen::Quaterniond &Q, co
     ofstream foutC1(VINS_RESULT_LATEST_VO_PATH, ios::app);
     foutC1.setf(ios::fixed, ios::floatfield);
     foutC1.precision(0);
-    foutC1 << odometry.header.stamp.toSec() * 1e9 << " ";
+    foutC1 << odometry.header.stamp.toSec() << " ";
     foutC1.precision(5);
     foutC1 << P.x() << " "
             << P.y() << " "
@@ -170,7 +170,7 @@ void pubOdometry(const Estimator &estimator, const std_msgs::Header &header)
         ofstream foutC(VINS_RESULT_PATH, ios::app);
         foutC.setf(ios::fixed, ios::floatfield);
         foutC.precision(0);
-        foutC << header.stamp.toSec() * 1e9 << " ";
+        foutC << header.stamp.toSec() << " ";
         foutC.precision(5);
         foutC << estimator.Ps[WINDOW_SIZE].x() << " "
               << estimator.Ps[WINDOW_SIZE].y() << " "
