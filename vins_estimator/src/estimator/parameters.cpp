@@ -28,6 +28,7 @@ int ESTIMATE_TD;
 int ROLLING_SHUTTER;
 std::string EX_CALIB_RESULT_PATH;
 std::string VINS_RESULT_PATH;
+std::string VINS_RESULT_LATEST_VO_PATH;
 std::string OUTPUT_FOLDER;
 std::string IMU_TOPIC;
 int ROW, COL;
@@ -109,9 +110,14 @@ void readParameters(std::string config_file)
 
     fsSettings["output_path"] >> OUTPUT_FOLDER;
     VINS_RESULT_PATH = OUTPUT_FOLDER + "/vio.csv";
+    VINS_RESULT_LATEST_VO_PATH = OUTPUT_FOLDER + "/latest_vo.csv";
     std::cout << "result path " << VINS_RESULT_PATH << std::endl;
+    std::cout << "result of latest vo path " << VINS_RESULT_LATEST_VO_PATH << std::endl;
     std::ofstream fout(VINS_RESULT_PATH, std::ios::out);
     fout.close();
+    std::ofstream fout_vo(VINS_RESULT_LATEST_VO_PATH, std::ios::out);
+    fout_vo.close();
+
 
     ESTIMATE_EXTRINSIC = fsSettings["estimate_extrinsic"];
     if (ESTIMATE_EXTRINSIC == 2)

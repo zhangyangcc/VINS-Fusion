@@ -66,6 +66,20 @@ void pubLatestOdometry(const Eigen::Vector3d &P, const Eigen::Quaterniond &Q, co
     odometry.twist.twist.linear.y = V.y();
     odometry.twist.twist.linear.z = V.z();
     pub_latest_odometry.publish(odometry);
+    ofstream foutC1(VINS_RESULT_LATEST_VO_PATH, ios::app);
+    foutC1.setf(ios::fixed, ios::floatfield);
+    foutC1.precision(0);
+    foutC1 << odometry.header.stamp.toSec() * 1e9 << " ";
+    foutC1.precision(5);
+    foutC1 << P.x() << " "
+            << P.y() << " "
+            << P.z() << " "
+            << Q.w() << " "
+            << Q.x() << " "
+            << Q.y() << " "
+            << Q.z() << endl;
+
+    foutC1.close();
 }
 
 void pubTrackImage(const cv::Mat &imgTrack, const double t)
