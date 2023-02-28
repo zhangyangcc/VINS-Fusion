@@ -68,16 +68,19 @@ void pubLatestOdometry(const Eigen::Vector3d &P, const Eigen::Quaterniond &Q, co
     pub_latest_odometry.publish(odometry);
     ofstream foutC1(VINS_RESULT_LATEST_VO_PATH, ios::app);
     foutC1.setf(ios::fixed, ios::floatfield);
-    foutC1.precision(0);
+    foutC1.precision(9);
     foutC1 << odometry.header.stamp.toSec() << " ";
     foutC1.precision(5);
-    foutC1 << P.x() << " "
+    foutC1  << P.x() << " "
             << P.y() << " "
             << P.z() << " "
-            << Q.w() << " "
             << Q.x() << " "
             << Q.y() << " "
-            << Q.z() << endl;
+            << Q.z() << " "
+            << Q.w() << " "
+            << V.x() << " "
+            << V.y() << " "
+            << V.z() << endl;
 
     foutC1.close();
 }
@@ -169,16 +172,16 @@ void pubOdometry(const Estimator &estimator, const std_msgs::Header &header)
         // write result to file
         ofstream foutC(VINS_RESULT_PATH, ios::app);
         foutC.setf(ios::fixed, ios::floatfield);
-        foutC.precision(0);
+        foutC.precision(9);
         foutC << header.stamp.toSec() << " ";
         foutC.precision(5);
         foutC << estimator.Ps[WINDOW_SIZE].x() << " "
               << estimator.Ps[WINDOW_SIZE].y() << " "
               << estimator.Ps[WINDOW_SIZE].z() << " "
-              << tmp_Q.w() << " "
               << tmp_Q.x() << " "
               << tmp_Q.y() << " "
-              << tmp_Q.z() << endl;
+              << tmp_Q.z() << " "
+              << tmp_Q.w() << endl;
 
         foutC.close();
         Eigen::Vector3d tmp_T = estimator.Ps[WINDOW_SIZE];
